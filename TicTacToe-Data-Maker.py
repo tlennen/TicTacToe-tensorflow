@@ -135,7 +135,6 @@ def convert_board(board):
 
 def rotate_answers(hold):
     size = len(hold)
-    print("FIRST ",hold[0][0])
     for x in range(0,size*3):
         temp=[0,0,0,0,0,0,0,0,0,0]
         temp[0] = hold[x][6]
@@ -154,19 +153,18 @@ def rotate_answers(hold):
 def double_hold(hold):
     size = len(hold)
     for x in range(0,size):
-        temp = [0,0,0,0,0,0,0,0,0,0]
-        temp = hold[x]
-        for y in range(0,len(temp)):
-            if temp[y] == 1:
-                temp[y] = 2
-            elif temp[y] == 2:
-                temp[y]==1
+        temp = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        for y in range(0,len(hold[x])):
+            if hold[x][y]==2:
+                temp[y]=1
+            elif hold[x][y]==1:
+                temp[y]=2
         hold.append(temp)
     return hold
 
 def one_game():
     board = Tic()
-    board.show()
+    #board.show()
     hold = []
     while not board.complete():
         player = 'X'
@@ -176,42 +174,41 @@ def one_game():
         if not player_move in board.available_moves():
             continue
         board.make_move(player_move, player)
-        board.show()
+        #board.show()
         hold.append(convert_board(board.get_square()))
         if board.complete():
             break
         player = get_enemy(player)
         computer_move = determine(board, player)
         board.make_move(computer_move, player)
-        board.show()
+        #board.show()
         hold.append(convert_board(board.get_square()))
     winner = board.winner()
-    print(winner)
+    #print(winner)
     if winner == 'X':
         winner = 1;
     elif winner == 'O':
         winner = 2;
     else:
         winner = 0;
-    print(winner)
+    #print(winner)
     for x in hold:
         x.append(winner)
-    print(hold)
     hold = rotate_answers(hold)
-    print(hold)
-    #double_hold(hold);
-    print(hold)
+    #print(hold)
+    double_hold(hold);
+    #print(hold)
     print ("winner is", board.winner())
     return hold
 
 if __name__ == "__main__":
     num_rows = 0
     hold = []
-    for x in range(0,1):
+    for x in range(0,500):
         temp = (one_game())
         for y in temp:
             hold.append(y)
-    """df = pd.DataFrame(hold)
-    writer = pd.ExcelWriter('test.xlsx', engine='openpyxl')
+    df = pd.DataFrame(hold)
+    writer = pd.ExcelWriter('TestingData.xlsx', engine='openpyxl')
     df.to_excel(writer, startrow=0, index=False)
-    writer.save()"""
+    writer.save()
