@@ -17,10 +17,10 @@ def my_input_fn():
     return feature_cols, labels
 CSV_COLUMN_NAMES = ['1', '2','3', '4','5','6','7','8','9', 'Outcome']
 y_name = "Outcome"
-train = pd.read_csv("TicTacTest.csv", names=CSV_COLUMN_NAMES, header=0)
+train = pd.read_csv("test2.csv", names=CSV_COLUMN_NAMES, header=0)
 train_x, train_y = train, train.pop(y_name)
-batch_size = 100
-train_steps = 100
+batch_size = 1000
+train_steps = 1000
 # Fetch the data
 input = tf.placeholder(tf.float32, shape=(1,9))
 output = tf.placeholder(tf.int32, shape=1)
@@ -45,7 +45,7 @@ for key in range(1,10):
 classifier = tf.estimator.DNNClassifier(
     feature_columns=my_feature_columns,
     # Two hidden layers of 10 nodes each.
-    hidden_units=[20,20],
+    hidden_units=[10],
     # The model must choose between 3 classes.
     n_classes=3)
 
