@@ -3,6 +3,24 @@ import pandas as pd
 from pandas import ExcelWriter
 from pandas import ExcelFile
 
+# This program creates the data sets for the prediction models of Tic-Tac-Toe. The game is player between
+# an AI and a random selector. Every time a move is made, the board state is saved to an array. Once the match
+# is won, the winner is appended to every board state in the array. The data in the array then saved to an
+# Excel file for use in the prediction model.
+
+# There are several ways that the data is preprocessed before it is sent to the Excel file. The board states
+# are first converted into numbers (0 for none, 1 for 'X', 2 for 'O'). The board is then rotated 3 times around
+# the grid. Because Tic-Tac-Toe is uniform and orientation does not matter, this is basically like playing
+# 3 additional games at the same time. The data is then doubled by reversing the 1s and 2s so there is more
+# variation in the data set. The Excel file name must not exist before running the program.
+
+# The game is played an X number of times (can be changed down below) and then saved to Excel file.
+# The Excel file must be changed to look like Example.csv and saved as an csv. The first row is the following
+# values respectively: # of data sets, # of columns, and the possible outcomes. # of data sets can be found
+# by scrolling to the bottom and subtracting the row number by 1.
+
+number_of_games = 500
+
 class Tic(object):
     winning_combos = (
         [0, 1, 2], [3, 4, 5], [6, 7, 8],
@@ -204,7 +222,7 @@ def one_game():
 if __name__ == "__main__":
     num_rows = 0
     hold = []
-    for x in range(0,500):
+    for x in range(0,number_of_games):
         temp = (one_game())
         for y in temp:
             hold.append(y)
